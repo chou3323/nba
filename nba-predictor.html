@@ -44,10 +44,10 @@ input.man{border:2px solid var(--ac);background:color-mix(in srgb,var(--ac) 8%,v
 </head>
 <body>
 <h1>🏀 NBA 賽前預測表</h1>
-<div class="mut">照影片的 Excel 做法：算得分、模擬一萬場、對照市場指數。球隊數據到 11/14，賠率約 11/15 03:00 UTC。</div>
+<div class="mut">照影片的 Excel 做法：算得分、模擬一萬場、對照市場指數。球隊數據到 11/14，賠率約 11/16 02:00–04:00 UTC。</div>
 <div class="tabs" id="tabs"></div>
 <div id="v"></div>
-<p class="mut">數據來源：Basketball-Reference（球隊場均得失分）、Land of Basketball（球員場均得分，前 50 名）、FanDuel／BangTheBook（盤口，已換算成香港賠率）。頁面內是 11/15 的快照，不會自動更新。僅供學習，不是投注建議。</p>
+<p class="mut">數據來源：Basketball-Reference（球隊場均得失分）、Land of Basketball（球員場均得分，前 50 名）、FanDuel／BangTheBook（盤口，已換算成香港賠率）。頁面內是 11/16 的快照，不會自動更新。僅供學習，不是投注建議。</p>
 <script>
 const T=`ATL|老鷹|13|118.2|116.8|118.5|116.0
 BOS|塞爾提克|12|114.3|103.1|114.9|107.2
@@ -138,7 +138,7 @@ function ad(s){const k=document.getElementById(s?"h":"a").value,q=id=>document.g
 function tg(s,n){const Z=s?OH:OA;Z.has(n)?Z.delete(n):Z.add(n);upd()}
 const P={K:10,H:0.9,B:1,pace:6,sd:10.5,N:10000,R:0.5};
 // [客,主,美東開賽時,客背靠背,主背靠背,客獨贏,主獨贏,主隊讓分,大小分]
-const S=[["IND","PHI",13,0,0,2.4,0.339,-7.5,221.5],["LAL","PHX",16,0,0,null,null,null,null],["CHA","LAC",16.5,0,0,null,null,null,null],["SAS","UTA",17,0,0,0.061,9.2,17.5,224.5],["DAL","BOS",18,1,0,null,null,null,null],["NYK","TOR",18,0,0,0.592,1.42,4.5,217.5],["HOU","WAS",19,0,0,0.25,3.15,8.5,222.5],["ATL","MIL",20,0,0,0.348,2.34,6.5,232.5],["OKC","SAC",21,0,0,null,null,null,null]]
+const S=[["ORL","BOS",19,0,1,3.33,0.235,-9.5,211.5],["PHI","BKN",19,1,0,0.435,1.91,5.5,224.5],["CHI","CLE",19,0,0,3,0.267,-9.5,241.5],["MEM","WAS",19,0,1,0.578,1.46,3.5,229.5],["HOU","MIA",19.5,1,0,0.709,1.19,2.5,228.5],["POR","MIN",20,0,0,1.18,0.725,-2.5,228.5],["GSW","NOP",20,0,0,0.763,1.11,2.5,226.5],["PHX","DEN",21,1,0,3.41,0.228,-10.5,227.5]]
 .map(s=>({a:s[0],h:s[1],t:s[2],ab:s[3],hb:s[4],mlA:s[5],mlH:s[6],line:s[7],tot:s[8],ai:0,hi:0}));
 const bl=t=>({o:(t.g*t.o+P.K*t.lo)/(t.g+P.K),d:(t.g*t.d+P.K*t.ld)/(t.g+P.K)});
 const rn=()=>Math.sqrt(-2*Math.log(1-Math.random()))*Math.cos(2*Math.PI*Math.random());
@@ -193,13 +193,13 @@ function res(g,r,full){
   <div class="mut">基礎得分 = 己方進攻 + 對手防守 − 聯盟平均 ${LG}。進攻與防守都用「本季 × 場次 + K × 上季」除以「場次 + K」，K 預設 10。</div></details>`;
  return o;
 }
-function clock(h){let w=h+13;const nx=w>=24;w=w%24;return`美東 ${fm(h)}｜台灣 ${nx?"11/16 ":"11/15 "}${fm(w)}`}
+function clock(h){let w=h+13;const nx=w>=24;w=w%24;return`美東 ${fm(h)}｜台灣 ${nx?"11/17 ":"11/16 "}${fm(w)}`}
 const fm=h=>String(Math.floor(h)).padStart(2,"0")+":"+(h%1?"30":"00");
 let tab="s",C=S[0];
 function show(){
  document.getElementById("tabs").innerHTML=[["s","今日賽程"],["c","自選對戰"],["t","球隊戰力"]].map(x=>`<button class="${tab==x[0]?"on":""}" onclick="tab='${x[0]}';show()">${x[1]}</button>`).join("");
  const v=document.getElementById("v");
- if(tab=="s")v.innerHTML=`<div class="mut">11/15（日）共 9 場。<span class="tag ok">已帶入</span>是我抓的快照；<span class="tag">手填</span>要你照自己的板填。點卡片進去填。</div>`+S.map((g,i)=>{const r=calc(g);
+ if(tab=="s")v.innerHTML=`<div class="mut">11/16（一）共 8 場。<span class="tag ok">已帶入</span>是我抓的快照；<span class="tag">手填</span>要你照自己的板填。點卡片進去填。</div>`+S.map((g,i)=>{const r=calc(g);
   const tag=[g.ab?`${tm[g.a].n}背靠背`:"",g.hb?`${tm[g.h].n}背靠背`:""].filter(Boolean).join("、");
   return`<div class="card" onclick="C=S[${i}];OA.clear();OH.clear();tab='c';show();scrollTo(0,0)"><div class="mut">${clock(g.t)}${tag?"｜"+tag:""}</div><div class="mut" style="margin:4px 0">${[["賠率",g.mlA],["讓分",g.line],["總分",g.tot]].map(x=>x[1]==null?`<span class="tag">${x[0]}待填</span>`:`<span class="tag ok">${x[0]}已帶入</span>`).join("")}<span class="tag">傷病：進去選球員</span></div>${res(g,r,false).replace(/<svg[\s\S]*?<\/svg><div class="row mut">[\s\S]*?<\/div>$/,"")}</div>`}).join("");
  if(tab=="c"){
